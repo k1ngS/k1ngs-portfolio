@@ -1,0 +1,23 @@
+name: k1ngs-portfolio-v3
+
+services:
+  postgres:
+    image: postgres
+    container_name: k1ngs-portfolio-v3-postgres
+    environment:
+      POSTGRES_DB: k1ngs-portfolio-v3
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - k1ngs-portfolio-v3_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  k1ngs-portfolio-v3_postgres_data:
