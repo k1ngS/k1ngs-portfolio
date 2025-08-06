@@ -9,6 +9,8 @@
 		"ignoreUnknown": false,
 		"includes": [
 			"**",
+			"!apps/docs/.astro/**",
+			"!apps/server/prisma/generated/**",
 			"!**/.next",
 			"!**/dist",
 			"!**/.turbo",
