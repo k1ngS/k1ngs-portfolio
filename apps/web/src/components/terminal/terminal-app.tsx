@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Terminal, User, Folder, Mail, Code, Star, ExternalLink } from "lucide-react";
 import { trpc } from "@/utils/trpc";
+import { contactInfo } from "@/lib/env";
 import ContactForm from "@/components/contact-form";
 
 interface TerminalCommand {
@@ -222,10 +223,10 @@ export default function TerminalApp() {
 			"Contact Information",
 			"===================",
 			"",
-			"📧 Email: your.email@example.com",
-			"💼 LinkedIn: https://linkedin.com/in/yourprofile",
-			"🐙 GitHub: https://github.com/yourusername",
-			"🌐 Website: https://yourwebsite.com",
+			`📧 Email: ${contactInfo.email}`,
+			`💼 LinkedIn: ${contactInfo.linkedin}`,
+			`🐙 GitHub: ${contactInfo.github}`,
+			`🌐 Website: ${contactInfo.website}`,
 			"",
 			"Type 'contact' to open the contact form!",
 			"",
