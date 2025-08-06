@@ -4,6 +4,7 @@ model User {
   email         String
   emailVerified Boolean
   image         String?
+  role          UserRole  @default(USER)
   createdAt     DateTime
   updatedAt     DateTime
   sessions      Session[]
@@ -11,6 +12,11 @@ model User {
 
   @@unique([email])
   @@map("user")
+}
+
+enum UserRole {
+  USER
+  ADMIN
 }
 
 model Session {
