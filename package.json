@@ -8,7 +8,7 @@
 	"scripts": {
 		"check": "biome check --write .",
 		"prepare": "husky",
-		"dev": "turbo dev",
+		"dev": "sh -c \"turbo dev\"",
 		"build": "turbo build",
 		"check-types": "turbo check-types",
 		"dev:native": "turbo -F native dev",
