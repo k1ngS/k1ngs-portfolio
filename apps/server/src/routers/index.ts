@@ -1,4 +1,5 @@
 import { protectedProcedure, publicProcedure, router } from "../lib/trpc";
+import { contactRouter } from "./contact";
 import { contentRouter } from "./content";
 // import { implementationPlanRouter } from "./implementation-plan";
 import { projectsRouter } from "./projects";
@@ -20,6 +21,7 @@ export const appRouter = router({
 	skills: skillsRouter,
 	technologies: technologiesRouter,
 	content: contentRouter,
+	contact: contactRouter,
 	// implementationPlan: implementationPlanRouter,
 });
 export type AppRouter = typeof appRouter;
