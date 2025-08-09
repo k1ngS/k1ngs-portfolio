@@ -1,3 +1,5 @@
+import type { LucideIcon } from "lucide-react";
+
 export interface About {
 	id: string;
 	title: string;
@@ -5,14 +7,17 @@ export interface About {
 }
 
 export interface Project {
+	id: string;
 	title: string;
 	description: string;
-	content: string;
-	category: "WEB" | "MOBILE" | "API" | "DESKTOP" | "OTHER";
+	longDescription?: string;
+	content?: string | null;
+	category: Category | null;
+	status?: ProjectStatus | null;
 	featured: boolean;
-	githubUrl?: string;
-	demoUrl?: string;
-	imageUrl?: string;
+	githubUrl?: string | null;
+	demoUrl?: string | null;
+	imageUrl?: string | null;
 	technologies: string[];
 	tags: string[];
 	translations: {
@@ -23,19 +28,14 @@ export interface Project {
 			content: string;
 		};
 	};
+	createdAt: string;
+	updatedAt: string;
 }
 
 export interface Skill {
 	name: string;
 	level: number;
-	category:
-		| "FRONTEND"
-		| "BACKEND"
-		| "DATABASE"
-		| "DEVOPS"
-		| "MOBILE"
-		| "SOFT_SKILLS"
-		| "OTHER";
+	category: Category | null;
 	yearsOfExp: number;
 	technologyId?: string;
 	translations: {
@@ -51,20 +51,13 @@ export interface Technology {
 	name: string;
 	icon: string;
 	color: string;
-	category:
-		| "FRONTEND"
-		| "BACKEND"
-		| "DATABASE"
-		| "DEVOPS"
-		| "MOBILE"
-		| "AI"
-		| "DESIGN"
-		| "OTHER";
+	category: Category | null;
+	order: number;
 }
 
 export interface Content {
 	key: string;
-	type: "TEXT" | "HTML" | "MARKDOWN";
+	type: ContentType | null;
 	category: string;
 	translations: {
 		[key: string]: {
@@ -83,6 +76,22 @@ export interface ContactFormData {
 	name: string;
 	email: string;
 	message: string;
+}
+
+export interface ContactForm {
+	name: string;
+	email: string;
+	subject: string;
+	message: string;
+}
+
+export interface SocialLink {
+	name: string;
+	url: string;
+	icon: LucideIcon;
+	username: string;
+	description: string;
+	color: string;
 }
 
 export interface SuccessResponse {
@@ -107,3 +116,27 @@ export interface ProjectParams {
 	limit?: number;
 	offset?: number;
 }
+
+export type Category =
+	| "FRONTEND"
+	| "BACKEND"
+	| "DATABASE"
+	| "DEVOPS"
+	| "MOBILE"
+	| "SOFT_SKILLS"
+	| "OTHER";
+
+export type Language = "en" | "pt" | "es" | "fr" | "de";
+
+export type ProjectCategory =
+	| "WEB"
+	| "MOBILE"
+	| "API"
+	| "DESKTOP"
+	| "AI"
+	| "GAME"
+	| "OTHER";
+
+export type ProjectStatus = "ACTIVE" | "ARCHIVED" | "DRAFT";
+
+export type ContentType = "TEXT" | "HTML" | "MARKDOWN";

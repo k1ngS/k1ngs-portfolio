@@ -35,6 +35,9 @@
 		"enabled": true,
 		"rules": {
 			"recommended": true,
+			"complexity": {
+				"noCommaOperator": "error"
+			},
 			"correctness": {
 				"useExhaustiveDependencies": "info"
 			},

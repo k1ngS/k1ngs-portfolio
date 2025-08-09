@@ -8,8 +8,7 @@ import {
 	useRouterState,
 } from "@tanstack/react-router";
 import Loader from "@/components/loader";
-import { LanguageProvider } from "../contexts/language-context";
-import { ThemeProvider } from "../contexts/theme-context";
+import { AppProviders } from "@/providers/app-providers";
 import appCss from "../index.css?url";
 import type { trpc } from "../utils/trpc";
 export interface RouterAppContext {
@@ -49,16 +48,9 @@ function RootDocument() {
 				<HeadContent />
 			</head>
 			<body>
-				<ThemeProvider>
-					<LanguageProvider>
-						{isFetching ? <Loader /> : <Outlet />}
-						{/* <TanStackRouterDevtools position="bottom-left" />
-						<ReactQueryDevtools
-							position="bottom"
-							buttonPosition="bottom-right"
-						/> */}
-					</LanguageProvider>
-				</ThemeProvider>
+				<AppProviders>
+					{isFetching ? <Loader /> : <Outlet />}
+				</AppProviders>
 				<Scripts />
 			</body>
 		</html>
