@@ -18,12 +18,17 @@ interface ThemeContextType {
 	changeTheme: (themeName: string) => void;
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+const ThemeContext = createContext<ThemeContextType | null>(null);
 
 export const useTheme = () => {
 	const context = useContext(ThemeContext);
 	if (!context) {
-		throw new Error("useTheme must be used within a ThemeProvider");
+		return {
+			currentTheme: "default",
+			theme: themes.default,
+			themes,
+			changeTheme: () => {},
+		}
 	}
 	return context;
 };
@@ -168,24 +173,27 @@ const themes: Record<string, Theme> = {
 
 interface ThemeProviderProps {
 	children: React.ReactNode;
+	initialTheme?: string;
 }
 
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-	const [currentTheme, setCurrentTheme] = useState("default");
-	const [isClient, setIsClient] = useState(false);
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, initialTheme = "default" }) => {
+	const [currentTheme, setCurrentTheme] = useState(initialTheme);
+	const [hydrated, setHydrated] = useState(false);
 
 	useEffect(() => {
-		setIsClient(true);
-		const savedTheme = localStorage.getItem("terminal-theme");
+		const savedTheme = typeof window !== "undefined"
+			? localStorage.getItem("terminal-theme")
+			: null;
 		if (savedTheme && themes[savedTheme]) {
 			setCurrentTheme(savedTheme);
 		}
+		setHydrated(true)
 	}, []);
 
 	const changeTheme = (themeName: string) => {
 		if (themes[themeName]) {
 			setCurrentTheme(themeName);
-			if (isClient) {
+			if (typeof window !== "undefined") {
 				localStorage.setItem("terminal-theme", themeName);
 			}
 		}
@@ -193,14 +201,14 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 
 	const value: ThemeContextType = {
 		currentTheme,
-		theme: themes[currentTheme],
+		theme: themes[currentTheme] ?? themes.default,
 		themes,
 		changeTheme,
 	};
 
 	return (
 		<ThemeContext.Provider value={value}>
-			<div className={themes[currentTheme].bg}>{children}</div>
+			<div className={themes[currentTheme]?.bg || themes.default.bg} style={!hydrated ? { transition: "none" } : undefined}>{children}</div>
 		</ThemeContext.Provider>
 	);
 };
