@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTheme } from "../../contexts/theme-context";
 import { Toaster } from "../ui/toaster";
 import BootSequence from "./boot-sequence";
-import TerminalLayout from "./terminal-layout";
+import Terminal from "./Terminal";
 
 interface TerminalAppProps {
 	className?: string;
@@ -12,9 +12,9 @@ interface TerminalAppProps {
 
 const TerminalApp: React.FC<TerminalAppProps> = ({ className = "" }) => {
 	const { theme } = useTheme();
-	const [isBooted, setIsBooted] = useState(false);
-	const [showTerminal, setShowTerminal] = useState(false);
-	const [isClient, _setIsClient] = useState(false);
+	const [isBooted, setIsBooted] = useState(true); // Skip boot for development
+	const [showTerminal, setShowTerminal] = useState(true); // Show terminal directly
+	const [isClient, setIsClient] = useState(true);
 
 	// useEffect(() => {
 	// 	setIsClient(true);
@@ -79,7 +79,7 @@ const TerminalApp: React.FC<TerminalAppProps> = ({ className = "" }) => {
 						transition={{ duration: 0.5 }}
 						className="h-screen"
 					>
-						<TerminalLayout onReboot={handleReboot} />
+						<Terminal />
 					</motion.div>
 				)}
 			</AnimatePresence>
